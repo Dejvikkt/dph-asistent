@@ -1,0 +1,14 @@
+Datum,Popis transakce,Částka,Měna
+2025-01-05,Patron Payment,25.00,USD
+2025-01-05,Platform Fee,-2.50,USD
+2025-01-10,Patron Payment,50.00,USD
+2025-01-10,Processing Fee,-3.75,USD
+2025-01-15,Subscription,10.00,EUR
+2025-01-15,Service Fee,-1.20,EUR
+2025-01-20,Patron Payment,100.00,USD
+2025-01-20,Stripe Fee,-4.30,USD
+2025-01-25,Tip,15.00,EUR
+2025-01-25,Transaction Fee,-0.90,EUR
+2025-01-28,Payout,200.00,USD
+2025-01-28,Payout Fee,-1.50,USD
+2025-01-31,Commission,-5.00,USD

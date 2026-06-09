@@ -57,8 +57,12 @@ export default function ExportButton({ report }) {
             </h3>
 
             {/* Cenová transparentnost */}
-            <div className="inline-block mb-4 bg-zinc-100 border border-zinc-200 text-zinc-600 text-xs font-semibold px-2.5 py-1 rounded-md">
-              Předpokládaná cena: 199 Kč / měsíc
+            <div className="mb-6 text-center">
+              <span className="text-sm text-zinc-500 block mb-1">Předpokládaná cena</span>
+              <div className="flex items-baseline justify-center gap-1">
+                <span className="text-4xl font-extrabold text-emerald-600">199 Kč</span>
+                <span className="text-sm text-zinc-500">/ měsíc</span>
+              </div>
             </div>
 
             <p className="text-sm text-zinc-500 mb-6 leading-relaxed">

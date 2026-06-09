@@ -12,6 +12,7 @@ import {
   UploadCloud,
   ShieldAlert,
 } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 import DropZone from './components/DropZone';
 import Report from './components/Report';
 import ExportButton from './components/ExportButton';
@@ -228,8 +229,10 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen text-zinc-950 selection:bg-zinc-200 selection:text-zinc-900 font-sans">
-      <main className="max-w-4xl mx-auto px-6 py-20 md:py-32">
+    <>
+      <Analytics />
+      <div className="min-h-screen text-zinc-950 selection:bg-zinc-200 selection:text-zinc-900 font-sans">
+        <main className="max-w-4xl mx-auto px-6 py-20 md:py-32">
         
         {/* Header */}
         <header className="mb-16 md:mb-24 animate-fade-in text-center">
@@ -361,5 +364,6 @@ export default function App() {
         </footer>
       </main>
     </div>
+    </>
   );
 }

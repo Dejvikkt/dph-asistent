@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 
@@ -38,9 +38,9 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-zinc-900 mb-3">4. Vaše práva</h2>
+            <h2 className="text-xl font-semibold text-zinc-900 mb-3">4. Vaše práva podle GDPR</h2>
             <p>
-              Vzhledem k tomu, že kromě dobrovolně zadaného e-mailu (pokud jej zadáte) neshromažďujeme žádné osobní údaje, nevyplývají pro nás žádné další povinnosti ohledně jejich zpracování. Máte právo kdykoliv požádat o smazání vaší e-mailové adresy z naší databáze (z formuláře zájemců).
+              Vzhledem k tomu, že (s výjimkou dobrovolně zadaného e-mailu na čekací listinu) neprovádíme zpracování žádných osobních údajů uživatelů, nevystupujeme v roli Správce ani Zpracovatele ve smyslu nařízení GDPR ohledně dat z vašich nahraných CSV souborů. Pokud jde o vaši e-mailovou adresu, máte právo na přístup k těmto údajům a právo požadovat její okamžité vymazání. Žádost o výmaz nám stačí sdělit jakýmkoliv kontaktním kanálem.
             </p>
           </section>
         </div>

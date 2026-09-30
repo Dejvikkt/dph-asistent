@@ -336,7 +336,7 @@ export default function Home() {
               </svg>
             </div>
             <span className="text-sm text-zinc-600 leading-relaxed select-none group-hover:text-zinc-900 transition-colors">
-              Rozumím, že tento nástroj slouží pouze pro orientační výpočet. Zodpovědnost za správnost údajů a použitý kurz ČNB pro Finanční správu nesu já.
+              Souhlasím s <Link to="/podminky" className="underline hover:text-emerald-600" onClick={(e) => e.stopPropagation()}>Podmínkami užití</Link> a beru na vědomí, že tento nástroj slouží pouze pro orientační výpočet. Zodpovědnost za správnost údajů pro Finanční správu nesu výlučně já.
             </span>
           </label>
 

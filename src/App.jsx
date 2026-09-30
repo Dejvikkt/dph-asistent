@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import {
   Shield,
   RotateCcw,
@@ -173,17 +173,9 @@ export default function App() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [rates, setRates] = useState({ USD: 23.50, EUR: 25.30 });
   const [legalConsent, setLegalConsent] = useState(false);
+  const [pendingFile, setPendingFile] = useState(null);
 
-  const processFile = useCallback((csvText, fileName) => {
-    if (!legalConsent) {
-      setStatus({
-        type: 'error',
-        title: 'Chybějící souhlas',
-        message: 'Prosím, potvrďte právní doložku pro pokračování.',
-      });
-      return;
-    }
-
+  const runAnalysis = useCallback((csvText, fileName) => {
     setIsProcessing(true);
     setReport(null);
     setStatus({ type: 'processing', title: 'Zpracovávám data', message: `Analyzuji soubor: ${fileName}` });
@@ -219,12 +211,35 @@ export default function App() {
       } finally {
         setIsProcessing(false);
       }
-    }, 400); // Rychlejší odezva
-  }, [rates, legalConsent]);
+    }, 400);
+  }, [rates]);
+
+  const processFile = useCallback((csvText, fileName) => {
+    setPendingFile({ csvText, fileName });
+
+    if (!legalConsent) {
+      setStatus({
+        type: 'error',
+        title: 'Chybějící souhlas',
+        message: 'Prosím, potvrďte právní doložku níže a soubor se automaticky zpracuje.',
+      });
+      return;
+    }
+
+    runAnalysis(csvText, fileName);
+  }, [legalConsent, runAnalysis]);
+
+  // Automaticky zpracuj uložený soubor, jakmile uživatel zaškrtne souhlas
+  useEffect(() => {
+    if (legalConsent && pendingFile && !report && !isProcessing) {
+      runAnalysis(pendingFile.csvText, pendingFile.fileName);
+    }
+  }, [legalConsent, pendingFile, report, isProcessing, runAnalysis]);
 
   const handleReset = () => {
     setReport(null);
     setStatus(null);
+    setPendingFile(null);
   };
 
   return (

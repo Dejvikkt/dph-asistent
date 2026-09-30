@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import {
   Shield,
   RotateCcw,
@@ -173,7 +173,7 @@ export default function App() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [rates, setRates] = useState({ USD: 23.50, EUR: 25.30 });
   const [legalConsent, setLegalConsent] = useState(false);
-  const [pendingFile, setPendingFile] = useState(null);
+  const pendingFileRef = useRef(null);
 
   const runAnalysis = useCallback((csvText, fileName) => {
     setIsProcessing(true);
@@ -215,7 +215,8 @@ export default function App() {
   }, [rates]);
 
   const processFile = useCallback((csvText, fileName) => {
-    setPendingFile({ csvText, fileName });
+    // Vždy si soubor zapamatuj
+    pendingFileRef.current = { csvText, fileName };
 
     if (!legalConsent) {
       setStatus({
@@ -229,17 +230,18 @@ export default function App() {
     runAnalysis(csvText, fileName);
   }, [legalConsent, runAnalysis]);
 
-  // Automaticky zpracuj uložený soubor, jakmile uživatel zaškrtne souhlas
-  useEffect(() => {
-    if (legalConsent && pendingFile && !report && !isProcessing) {
-      runAnalysis(pendingFile.csvText, pendingFile.fileName);
+  // Když uživatel zaškrtne souhlas a máme čekající soubor, rovnou ho zpracujeme
+  const handleConsentChange = useCallback((checked) => {
+    setLegalConsent(checked);
+    if (checked && pendingFileRef.current && !isProcessing) {
+      runAnalysis(pendingFileRef.current.csvText, pendingFileRef.current.fileName);
     }
-  }, [legalConsent, pendingFile, report, isProcessing, runAnalysis]);
+  }, [isProcessing, runAnalysis]);
 
   const handleReset = () => {
     setReport(null);
     setStatus(null);
-    setPendingFile(null);
+    pendingFileRef.current = null;
   };
 
   return (
@@ -326,7 +328,7 @@ export default function App() {
                 type="checkbox"
                 className="peer appearance-none w-5 h-5 border border-zinc-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500/20 checked:bg-emerald-600 checked:border-emerald-600 transition-colors"
                 checked={legalConsent}
-                onChange={(e) => setLegalConsent(e.target.checked)}
+                onChange={(e) => handleConsentChange(e.target.checked)}
               />
               <svg className="absolute w-3 h-3 text-white opacity-0 peer-checked:opacity-100 pointer-events-none" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
